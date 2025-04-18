@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oh My cecel🤤</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #ffbfd2, #ffe6e6);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+      position: relative;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 3em;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-shadow: 0 0 15px #ff4d6d;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    #cecelPhoto {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #ff4d6d;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.7);
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(to right, #ff4d6d, #ff85a2);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4d6d;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    form {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    textarea {
+      padding: 15px;
+      width: 300px;
+      border: none;
+      border-radius: 15px;
+      margin: 10px 0;
+      font-size: 1em;
+      resize: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #thanks {
+      display: none;
+      color: #ff4d6d;
+      margin-top: 20px;
+      font-weight: bold;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CSS Heart Animation */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 5s linear infinite;
+      opacity: 0.7;
+      z-index: -1;
+      top: -20px;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: red;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) scale(1) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2 id="title">Cecel, kamu suka yan?</h2>
+  <img src="https://files.catbox.moe/90fkqc.jpg" id="cecelPhoto" alt="Foto Cecel">
+  <button id="yesBtn">Iya🤬</button>
+
+  
+  <form id="loveForm">
+    <label for="reason">Apa yang kamu suka dari aku?</label>
+    <textarea id="reason" rows="4" required placeholder="Tulis di sini ya..."></textarea>
+    <button type="submit">Kirim ke Aku</button>
+  </form>
+
+  <div id="thanks">SEBENTAR YAN CEK😏</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const yesBtn = document.getElementById('yesBtn');
+      const form = document.getElementById('loveForm');
+      const title = document.getElementById('title');
+      const thanks = document.getElementById('thanks');
+
+      yesBtn.addEventListener('click', () => {
+        yesBtn.style.display = 'none';
+        title.style.display = 'none';
+        form.style.display = 'flex';
+
+        
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.bottom = "0px";
+          heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+          heart.style.opacity = Math.random();
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 6000);
+        }
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const reason = document.getElementById('reason').value;
+
+      
+        const token = "7557234978:AAGxnPhCTjOktufDbOMspdW-xwz15PVbxT8";
+        const chat_id = "8091706716";
+
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: chat_id,
+            text: `JAWABAN CECEL:\n\n"${reason}"`
+          })
+        })
+        .then(res => {
+          form.style.display = 'none';
+          thanks.style.display = 'block';
+        })
+        .catch(err => {
+          alert("Gagal ngirim ke Telegram: " + err.message);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
